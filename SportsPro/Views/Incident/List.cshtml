@@ -1,0 +1,110 @@
+﻿@using SportsPro.ViewModels
+@using Microsoft.AspNetCore.Http
+@model IncidentViewModel
+@{
+    ViewBag.Title = "Incident Manager";
+}
+<h1>Incident Manager</h1>
+
+<div class="mb-3">
+    <label for="incidentFilter" class="form-label"></label>
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link @if (Model.FilterString == "All") {<text>active text-primary</text>}" href="#all" data-toggle="tab">All incidents</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @if (Model.FilterString == "Unassigned") {<text>active text-primary</text>}" href="#unassigned" data-toggle="tab">Unassigned incidents</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @if (Model.FilterString == "Open") {<text>active text-primary</text>}" href="#open" data-toggle="tab">Open incidents</a>
+        </li>
+    </ul>
+</div>
+<div class="tab-content">
+    <div id="all" class="tab-pane active @if (Model.FilterString == "All") {<text>show active</text>}">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Customer</th>
+                    <th>Product</th>
+                    <th>Date Opened</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var incident in Model.Incidents)
+                {
+                    <tr>
+                        <td>@incident.Title</td>
+                        <td>@incident.Customer.FullName</td>
+                        <td>@incident.Product.Name</td>
+                        <td>@incident.DateOpened.ToShortDateString()</td>
+                        <td><a asp-action="Edit" asp-route-id="@incident.IncidentID" class="btn btn-primary">Edit</a></td>
+                        <td><a asp-action="Delete" asp-route-id="@incident.IncidentID" class="btn btn-primary">Delete</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+</div>
+<div id="unassigned" class="tab-pane fade @if (Model.FilterString == "Unassigned") {<text>show active</text>}">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Customer</th>
+                    <th>Product</th>
+                    <th>Date Opened</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var incident in Model.Incidents.Where(i => i.TechnicianID == null))
+                {
+                    <tr>
+                        <td>@incident.Title</td>
+                        <td>@incident.Customer.FullName</td>
+                        <td>@incident.Product.Name</td>
+                        <td>@incident.DateOpened.ToShortDateString()</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@incident.IncidentID" class="btn btn-primary">Edit</a>
+
+                        </td>
+                        <td>
+                            <a asp-action="Delete" asp-route-id="@incident.IncidentID" class="btn btn-primary">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+</div>
+<div id="open" class="tab-pane fade @if (Model.FilterString == "Open") {<text>show active</text>}">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Customer</th>
+                <th>Product</th>
+                <th>Date Opened</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var incident in Model.Incidents.Where(i => i.DateClosed == null))
+            {
+                <tr>
+                    <td>@incident.Title</td>
+                    <td>@incident.Customer.FullName</td>
+                    <td>@incident.Product.Name</td>
+                    <td>@incident.DateOpened.ToShortDateString()</td>
+                    <td><a asp-action="Edit" asp-route-id="@incident.IncidentID" class="btn btn-primary">Edit</a></td>
+                    <td><a asp-action="Delete" asp-route-id="@incident.IncidentID" class="btn btn-primary">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<a asp-action="Add" class="btn btn-primary mb-3">Add Incident</a>

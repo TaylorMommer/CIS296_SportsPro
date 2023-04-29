@@ -1,0 +1,63 @@
+﻿@model Incident
+@{
+    string title = ViewBag.Action + " Incident";
+    ViewBag.Title = title;
+}
+
+@section scripts
+    {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive jquery.validate.unobtrusive.min.js"></script>
+}
+
+<h2 class="mt-3">@ViewBag.Title</h2>
+
+<form asp-action="Save" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="CustomerID">Customer</label>
+        <select asp-for="CustomerID" asp-items="@(new SelectList(ViewBag.Customers, "CustomerID", "FullName", Model.CustomerID.ToString()))" class="form-control">
+            <option value="">Select a customer</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ProductID">Product</label>
+        <select asp-for="ProductID" asp-items="@(new SelectList(ViewBag.Products, "ProductID", "Name", Model.ProductID.ToString()))" class="form-control">
+            <option value="">Select a Product</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Title">Title </label>
+        <input asp-for="Title" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description">Description</label>
+        <input type="text" asp-for="Description"  class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TechnicianID">Technician</label>
+        <select asp-for="TechnicianID" asp-items="@(new SelectList(ViewBag.Technicians, "TechnicianID", "Name", Model.TechnicianID.ToString()))" class="form-control">
+            <option value="">Assign a technician</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DateOpened">Date Openened</label>
+        <input asp-for="DateOpened" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DateClosed">Date Closed</label>
+        <input asp-for="DateClosed" class="form-control" />
+    </div>
+
+    <input type="hidden" asp-for="IncidentID" />
+
+    <button type="submit" class="btn btn-primary">@ViewBag.Action</button>
+    <a asp-controller="Incident" asp-action="List" class="btn btn-primary">Cancel</a>
+</form>

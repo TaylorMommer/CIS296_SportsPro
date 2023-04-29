@@ -1,0 +1,19 @@
+﻿@model Product
+@{
+    string title = ViewBag.Action + " Product";
+    ViewBag.Title = title;
+}
+
+<div class="jumbotron mt-4 alert-danger">
+    <h1>Confirm Deletion</h1>
+    <p>Are you sure you want to delete @Model.Name ?</p>
+
+    <form asp-action="Delete" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <input type="hidden" asp-for="ProductID" />
+
+        <button type="submit" class="btn btn-primary">Delete</button>
+        <a asp-controller="Product" asp-action="List" class="btn btn-primary">Cancel</a>
+    </form>
+</div>

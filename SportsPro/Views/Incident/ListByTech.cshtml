@@ -1,0 +1,21 @@
+﻿@model List<Incident>
+@{
+    ViewBag.Title = "Get Technician";
+}
+
+<h1>Technician</h1>
+
+<body>
+    @foreach (var incident in Model)
+    {
+            <div class="form-group">
+                <label asp-for="@incident.TechnicianID">Technician</label>
+                <select asp-for="@incident.TechnicianID" asp-items="@(new SelectList(ViewBag.Technicians, "TechnicianID", "Name", @incident.TechnicianID.ToString()))" class="form-control">
+                    <option value="">Select a technician</option>
+                </select>
+            </div>
+    }
+
+</body>
+
+<a asp-action="Add" class="btn btn-primary mb-3">Select</a>

@@ -1,0 +1,51 @@
+﻿@model Incident
+@{
+    ViewData["Title"] = "Edit Incident";
+}
+<div class="text-center">
+    <h2 class="mt-3">Edit Incident</h2>
+</div>
+
+<form asp-action="Edit" asp-controller="TechIncident" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input asp-for="IncidentID" type="hidden" value="@Model.IncidentID" />
+    <input asp-for="TechnicianID" type="hidden" value="@Model.TechnicianID" />
+
+    <div class="form-group row">
+        <label asp-for="Technician">Customer:</label>
+        <input asp-for="Technician" type="text" class="form-control" value="@Model.Technician.Name" readonly />
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Customer">Customer:</label>
+        <input asp-for="Customer" type="text" class="form-control" value="@Model.Customer.FullName" readonly />
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Product">Product :</label>
+        <input asp-for="Product" type="text" class="form-control" value="@Model.Product.Name" readonly />
+    </div>
+    
+    <div class="form-group row">
+        <label asp-for="Title">Title: </label>
+        <input asp-for="Title" type="text" class="form-control" value="@Model.Title." readonly />
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="DateOpened">Date Opened: : </label>
+        <input asp-for="DateOpened" type="text" class="form-control" value="@Model.DateOpened" readonly />
+    </div>
+
+     <div class="form-group row">
+        <label asp-for="Description">Description: </label>
+        <textarea asp-for="Description" class="form-control" rows="5" id="description" placeholder="Description" required value=@Model.Description></textarea>
+    </div>
+
+        <div class="form-group row">
+        <label asp-for="DateClosed">Date Closed:</label>
+        <input asp-for="DateClosed" type="datetime" class="form-control" id="cdate" placeholder="Date Closed" value=@Model.DateClosed>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-controller="TechIncident" asp-action="List" asp-route-id="@Model.TechnicianID" class="btn btn-info">Cancel</a>
+</form>

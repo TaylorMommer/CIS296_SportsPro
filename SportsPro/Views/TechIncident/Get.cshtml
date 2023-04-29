@@ -1,0 +1,32 @@
+﻿@model List<Technician>
+@{
+    ViewData["Title"] = "Get Technician";
+}
+
+
+    <script>
+        function Changed() {
+            const select = document.querySelector("select");
+            document.querySelector("#select").setAttribute("href", "/techincident/list/" + select.options[select.selectedIndex].value)
+        }
+    </script>
+
+
+
+<h2 class="mt-3">@ViewBag.Title</h2>
+    <div class="form-group">
+        <label>Technician</label>
+        <select onchange="Changed()" name="id" required class="form-control">
+
+            <option value="" disabled selected hidden>Choose Technician</option>
+                @foreach (var t in Model)
+                {
+                    <option value="@t.TechnicianID">@t.Name</option>
+                }
+        </select>
+    <input type="hidden" asp-route-id="technicianID" />
+
+    </div>
+<a id="select" asp-controller="TechIncident" asp-action="List" class="btn btn-primary">Select</a>
+
+

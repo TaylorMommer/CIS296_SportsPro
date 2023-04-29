@@ -1,0 +1,47 @@
+﻿@using SportsPro.ViewModels
+@model RegistrationViewModel
+
+
+
+<h2>Customer: @Model.ActiveCustomer</h2>
+<h3>Registrations</h3>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Product product in Model.Products)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>
+                    <a asp-controller="Registration" asp-action="Delete"
+                   asp-route-id="@product.ProductID"
+                   class="btn">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="alert-info">@Model.ErrorMessage</div>
+<form asp-action="RegisterProduct" method="post">
+
+    <div class="form-group">
+        <h3>Product</h3>
+
+        <select asp-for="CurrentProduct.ProductID" class="form-control">
+            <option value="">Please select one</option>
+            @foreach (Product product in Model.Products)
+            {
+                <option value="@product.ProductID">@product.Name</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <button type="submit" class="btn btn-primary">Select</button>
+    </div>
+</form>
